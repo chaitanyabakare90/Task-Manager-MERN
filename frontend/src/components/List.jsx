@@ -20,7 +20,7 @@ export default function List(){
 
     let handleDeleteTask = async (id)=>{
         try{
-            let response = await axios.delete(`http://localhost:8080/tasks/${id}`);
+            let response = await axios.delete(`http://localhost:8080/delete/${id}`);
              setTasks(prevTasks =>
                 prevTasks.filter(
                     task => task._id !== id

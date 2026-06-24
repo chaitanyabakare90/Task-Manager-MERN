@@ -46,7 +46,7 @@ app.get("/tasks", async (req,res) =>{
 })
 
 
-app.delete("/tasks/:id",async (req,res) =>{
+app.delete("/delete/:id",async (req,res) =>{
     try{
         const {id} = req.params;
         await Tasks.findByIdAndDelete(id);
