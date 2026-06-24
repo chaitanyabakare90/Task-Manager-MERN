@@ -1,12 +1,14 @@
 import { useState } from "react"
 import "../style/Addtask.css"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 export default function AddTask() {
     let [formData, setFormData] = useState({
         title: "",
         description: ""
     })
+    const navigate = useNavigate();
 
     let handleInputChange = (event) => {
         setFormData((currData) => {
@@ -42,6 +44,7 @@ export default function AddTask() {
                     title: "",
                     description: ""
                 })
+            navigate("/list");
         }catch(err){
             console.log(err);
         }

@@ -1,0 +1,50 @@
+
+
+h1{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.task-list{
+    width: 95%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 80px 1fr 2fr 100px;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.list-header{
+    background-color: #e8e8e8;
+    padding: 15px;
+    font-weight: bold;
+    border: 1px solid #d3d3d3;
+}
+
+.list-item{
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    color: #444;
+    word-wrap: break-word;
+}
+
+.delete-item{
+    width: 100%;
+    padding: 6px;
+    background-color: #ed2e41;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.delete-item:hover{
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(241, 53, 72, 0.502);
+}

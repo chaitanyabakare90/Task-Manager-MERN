@@ -34,6 +34,33 @@ app.post("/tasks", async (req,res) => {
 
 })
 
+app.get("/tasks", async (req,res) =>{
+    try{
+        const tasks = await Tasks.find();
+        res.status(200).json(tasks);
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        });
+    }
+})
+
+
+app.delete("/tasks/:id",async (req,res) =>{
+    try{
+        const {id} = req.params;
+        await Tasks.findByIdAndDelete(id);
+        res.status(200).json({
+            message: "Task deleted successfully"
+        }); 
+
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+})
+
 app.listen(8080,() => {
     console.log("app is listening");
 })
