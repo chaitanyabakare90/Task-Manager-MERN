@@ -14,6 +14,7 @@ app.use(express.json()); //"If a request contains JSON data, convert it into a J
 app.use(express.urlencoded({extended:true})); // to handle form data in html forms not react forms
 
 
+//Add a new Task
 app.post("/tasks", async (req,res) => {
     try {
         const task = new Tasks(req.body);
@@ -34,6 +35,7 @@ app.post("/tasks", async (req,res) => {
 
 })
 
+//Find All the tasks
 app.get("/tasks", async (req,res) =>{
     try{
         const tasks = await Tasks.find();
@@ -45,7 +47,7 @@ app.get("/tasks", async (req,res) =>{
     }
 })
 
-
+//Delete the task
 app.delete("/delete/:id",async (req,res) =>{
     try{
         const {id} = req.params;
@@ -60,6 +62,39 @@ app.delete("/delete/:id",async (req,res) =>{
         })
     }
 })
+
+
+//Get a single task
+app.get("/tasks/:id",async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const task = await Tasks.findById(id);
+        res.status(200).json(task);
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        });
+    }
+})
+
+//Update the task
+
+app.put("/tasks/:id", async (req, res) => {
+    try {
+        const task = await Tasks.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        res.status(200).json(task);
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+});
 
 app.listen(8080,() => {
     console.log("app is listening");

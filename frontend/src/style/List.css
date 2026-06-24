@@ -10,7 +10,7 @@ h1{
     width: 95%;
     margin: auto;
     display: grid;
-    grid-template-columns: 80px 1fr 2fr 100px;
+    grid-template-columns: 100px 80px 1fr 2fr 200px;
     gap: 10px;
     list-style: none;
     padding: 0;
@@ -32,7 +32,7 @@ h1{
 }
 
 .delete-item{
-    width: 100%;
+    width: 50%;
     padding: 6px;
     background-color: #ed2e41;
     color: white;
@@ -44,7 +44,28 @@ h1{
 }
 
 .delete-item:hover{
-    background-color: #c82333;
+    background-color: #ec394b;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(241, 53, 72, 0.502);
+    box-shadow: 0 4px 8px rgb(231, 55, 73);
+}
+.update-item{
+    width: 50%;
+    padding: 6px;
+    background-color: rgb(40, 163, 40);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-left: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.update-item:hover{
+    background-color: rgb(60, 217, 60);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(82, 219, 80, 0.502);
 }
