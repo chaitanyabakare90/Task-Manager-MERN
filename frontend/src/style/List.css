@@ -7,7 +7,7 @@ h1{
 }
 
 .task-list{
-    width: 95%;
+    width: 100%;
     margin: auto;
     display: grid;
     grid-template-columns: 100px 80px 1fr 2fr 200px;
@@ -68,4 +68,13 @@ h1{
     background-color: rgb(60, 217, 60);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(82, 219, 80, 0.502);
+}
+
+.delete-multiple{
+    width: 100px;
+    margin-bottom: 10px;
+}
+.list-container{
+    margin-left: 20px;
+    margin-right: 20px;
 }

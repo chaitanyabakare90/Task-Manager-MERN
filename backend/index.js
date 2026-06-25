@@ -23,7 +23,7 @@ app.post("/tasks", async (req,res) => {
         console.log(task);
 
         res.status(201).json({
-            message: "Task created successfully",
+            message: "Tasks Deleted successfully",
             task
         });
     }
@@ -47,6 +47,26 @@ app.get("/tasks", async (req,res) =>{
     }
 })
 
+//Delete Multiple items 
+
+app.delete("/delete/multiple", async (req, res) => {
+    try {
+        const { ids } = req.body;
+        await Tasks.deleteMany({
+            _id: { $in: ids }
+        });
+
+        res.status(200).json({
+            message: "Tasks deleted successfully"
+        });
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+        });
+    }
+});
+
 //Delete the task
 app.delete("/delete/:id",async (req,res) =>{
     try{
@@ -57,6 +77,7 @@ app.delete("/delete/:id",async (req,res) =>{
         }); 
 
     }catch(err){
+        
         res.status(500).json({
             message : err.message
         })
@@ -95,6 +116,8 @@ app.put("/tasks/:id", async (req, res) => {
         });
     }
 });
+
+
 
 app.listen(8080,() => {
     console.log("app is listening");

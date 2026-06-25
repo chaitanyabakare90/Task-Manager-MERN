@@ -23,7 +23,7 @@ export default function List(){
     let handleDeleteTask = async (id)=>{
         try{
             let response = await axios.delete(`http://localhost:8080/delete/${id}`);
-             setTasks(prevTasks =>
+            setTasks(prevTasks =>
                 prevTasks.filter(
                     task => task._id !== id
                 )
@@ -50,10 +50,29 @@ export default function List(){
             setselectedTask([id,...selectedTask])
         }
     }
+    let deleteMultiple = async () =>{
+        try{
+            let response = await axios.delete("http://localhost:8080/delete/multiple",{
+                data : {
+                    ids : selectedTask
+                }
+            });
+
+            setTasks(prevTasks =>
+                prevTasks.filter(
+                    (task) => !selectedTask.includes(task._id)
+                )
+            );
+            setselectedTask([]);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     return (
-        <div>
+        <div className="list-container">
             <h1>To Do List</h1>
+            <button onClick={deleteMultiple} className="delete-item delete-multiple">Delete</button>
             <ul className="task-list">
                 <li className="list-header"><input onChange={selectAll} type="checkbox" /></li>
                 <li className="list-header">S.NO</li>
