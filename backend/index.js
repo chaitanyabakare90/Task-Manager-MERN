@@ -4,6 +4,8 @@ const express = require("express");
 const connection = require("./dbconfig")
 const cors = require("cors");
 const Tasks = require("./models/tasks.js")
+const User = require("./models/user.js");
+const bcrypt = require("bcryptjs");
 
 const app = express();
 
@@ -11,11 +13,66 @@ connection();
 
 app.use(cors());
 app.use(express.json()); //"If a request contains JSON data, convert it into a JavaScript object and store it in req.body."
-app.use(express.urlencoded({extended:true})); // to handle form data in html forms not react forms
+app.use(express.urlencoded({ extended: true })); // to handle form data in html forms not react forms
 
+
+//signup
+app.post("/signup", async (req, res) => {
+    try {
+        const user = req.body;
+        console.log(req.body);
+        const existingUser = await User.findOne({
+            email: user.email
+        });
+        if (existingUser) {
+            return res.status(400).json({
+                message: "Email Already Exist"
+            })
+        }
+        user.password = await bcrypt.hash(user.password, 10);
+        const newUser = new User(user);
+        await newUser.save();
+        res.status(201).json({
+            message: "User Saved Successfully"
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: err.message
+        })
+    }
+
+})
+
+//login
+
+app.post("/login",async(req,res) =>{
+    try{
+        const {email,password} = req.body;
+        const existingUser = await User.findOne({email});
+        if(!existingUser){
+            return res.status(400).json({
+                message : "Email Does Not Exist"
+            })
+        }
+        const isMatch = await bcrypt.compare(password,existingUser.password);
+        if(isMatch === false){
+            return res.status(400).json({
+                message : "Wrong Password"
+            })
+        } 
+        res.status(200).json({
+            message : "User is Valid"
+        })
+    }catch(err){
+        res.status(500).json({
+            message : err.message
+        })
+    }
+})
 
 //Add a new Task
-app.post("/tasks", async (req,res) => {
+app.post("/tasks", async (req, res) => {
     try {
         const task = new Tasks(req.body);
         await task.save();
@@ -36,13 +93,13 @@ app.post("/tasks", async (req,res) => {
 })
 
 //Find All the tasks
-app.get("/tasks", async (req,res) =>{
-    try{
+app.get("/tasks", async (req, res) => {
+    try {
         const tasks = await Tasks.find();
         res.status(200).json(tasks);
-    }catch(err){
+    } catch (err) {
         res.status(500).json({
-            message : err.message
+            message: err.message
         });
     }
 })
@@ -68,32 +125,32 @@ app.delete("/delete/multiple", async (req, res) => {
 });
 
 //Delete the task
-app.delete("/delete/:id",async (req,res) =>{
-    try{
-        const {id} = req.params;
+app.delete("/delete/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
         await Tasks.findByIdAndDelete(id);
         res.status(200).json({
             message: "Task deleted successfully"
-        }); 
+        });
 
-    }catch(err){
-        
+    } catch (err) {
+
         res.status(500).json({
-            message : err.message
+            message: err.message
         })
     }
 })
 
 
 //Get a single task
-app.get("/tasks/:id",async(req,res)=>{
-    try{
-        const {id} = req.params;
+app.get("/tasks/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
         const task = await Tasks.findById(id);
         res.status(200).json(task);
-    }catch(err){
+    } catch (err) {
         res.status(500).json({
-            message : err.message
+            message: err.message
         });
     }
 })
@@ -119,6 +176,6 @@ app.put("/tasks/:id", async (req, res) => {
 
 
 
-app.listen(8080,() => {
+app.listen(8080, () => {
     console.log("app is listening");
 })
