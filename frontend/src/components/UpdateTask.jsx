@@ -12,11 +12,16 @@ export default function UpdateTask() {
     })
     const navigate = useNavigate();
     const {id} = useParams();
-
+    const token = localStorage.getItem("token"); 
+    
     useEffect(() =>{
         async function fetchTask() {
             try{
-                const response = await axios.get(`http://localhost:8080/tasks/${id}`);
+                const response = await axios.get(`http://localhost:8080/tasks/${id}`,{
+                    headers :{
+                        authorization : `Bearer ${token}`
+                    }
+                });
                 setFormData(response.data);
             }catch(err){
                 console.log(err);

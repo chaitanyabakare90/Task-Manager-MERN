@@ -7,7 +7,7 @@ const Tasks = require("./models/tasks.js")
 const User = require("./models/user.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const verifyToken = require("./middleware/verifytoken.js");
 const app = express();
 
 connection();
@@ -84,9 +84,13 @@ app.post("/login",async(req,res) =>{
 })
 
 //Add a new Task
-app.post("/tasks", async (req, res) => {
+app.post("/tasks", verifyToken ,async (req, res) => {
     try {
-        const task = new Tasks(req.body);
+        const task = new Tasks({
+            title : req.body.title,
+            description : req.body.description,
+            owner : req.user.id
+        });
         await task.save();
 
         console.log(task);
@@ -105,9 +109,11 @@ app.post("/tasks", async (req, res) => {
 })
 
 //Find All the tasks
-app.get("/tasks", async (req, res) => {
+app.get("/tasks", verifyToken ,async (req, res) => {
     try {
-        const tasks = await Tasks.find();
+        const tasks = await Tasks.find({
+            owner : req.user.id
+        });
         res.status(200).json(tasks);
     } catch (err) {
         res.status(500).json({
@@ -118,11 +124,12 @@ app.get("/tasks", async (req, res) => {
 
 //Delete Multiple items 
 
-app.delete("/delete/multiple", async (req, res) => {
+app.delete("/delete/multiple",verifyToken ,async (req, res) => {
     try {
         const { ids } = req.body;
         await Tasks.deleteMany({
-            _id: { $in: ids }
+            _id: { $in: ids },
+            owner: req.user.id
         });
 
         res.status(200).json({
@@ -137,10 +144,13 @@ app.delete("/delete/multiple", async (req, res) => {
 });
 
 //Delete the task
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/delete/:id", verifyToken ,async (req, res) => {
     try {
         const { id } = req.params;
-        await Tasks.findByIdAndDelete(id);
+        await Tasks.findByIdAndDelete({
+            _id : id,
+            owner : req.user.id
+        });
         res.status(200).json({
             message: "Task deleted successfully"
         });
@@ -155,10 +165,13 @@ app.delete("/delete/:id", async (req, res) => {
 
 
 //Get a single task
-app.get("/tasks/:id", async (req, res) => {
+app.get("/tasks/:id", verifyToken ,async (req, res) => {
     try {
         const { id } = req.params;
-        const task = await Tasks.findById(id);
+        const task = await Tasks.findById({
+            _id : id,
+            owner : req.user.id
+        });
         res.status(200).json(task);
     } catch (err) {
         res.status(500).json({
@@ -169,10 +182,13 @@ app.get("/tasks/:id", async (req, res) => {
 
 //Update the task
 
-app.put("/tasks/:id", async (req, res) => {
+app.put("/tasks/:id", verifyToken ,async (req, res) => {
     try {
         const task = await Tasks.findByIdAndUpdate(
-            req.params.id,
+            {
+                _id: req.params.id,
+                owner: req.user.id
+            },
             req.body,
             { new: true }
         );

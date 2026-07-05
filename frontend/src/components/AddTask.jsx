@@ -9,7 +9,7 @@ export default function AddTask() {
         description: ""
     })
     const navigate = useNavigate();
-
+    const token = localStorage.getItem("token"); 
     let handleInputChange = (event) => {
         setFormData((currData) => {
             return { ...currData, [event.target.name]: event.target.value };
@@ -38,7 +38,11 @@ export default function AddTask() {
 
         //Method-2 
         try{
-            const response = await axios.post("http://localhost:8080/tasks",formData);
+            const response = await axios.post("http://localhost:8080/tasks",formData,{
+                    headers :{
+                        authorization : `Bearer ${token}`
+                    }
+                });
             console.log(response.data);
             setFormData({
                     title: "",

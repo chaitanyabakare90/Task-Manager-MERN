@@ -7,11 +7,17 @@ import { Link } from "react-router";
 export default function List(){
     const [tasks,setTasks] = useState([]);
     const [selectedTask,setselectedTask] = useState([]);
+    const token = localStorage.getItem("token"); 
+
 
     useEffect(() =>{
         async function fetchData(){
             try{
-                const response = await axios.get("http://localhost:8080/tasks");
+                const response = await axios.get("http://localhost:8080/tasks",{
+                    headers :{
+                        authorization : `Bearer ${token}`
+                    }
+                });
                 setTasks(response.data);
             }catch(err){
                 console.log(err);
@@ -22,7 +28,11 @@ export default function List(){
 
     let handleDeleteTask = async (id)=>{
         try{
-            let response = await axios.delete(`http://localhost:8080/delete/${id}`);
+            let response = await axios.delete(`http://localhost:8080/delete/${id}`,{
+                    headers :{
+                        authorization : `Bearer ${token}`
+                    }
+                });
             setTasks(prevTasks =>
                 prevTasks.filter(
                     task => task._id !== id
@@ -53,6 +63,9 @@ export default function List(){
     let deleteMultiple = async () =>{
         try{
             let response = await axios.delete("http://localhost:8080/delete/multiple",{
+                headers :{
+                        authorization : `Bearer ${token}`
+                },
                 data : {
                     ids : selectedTask
                 }

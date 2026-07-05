@@ -19,7 +19,7 @@ export default function Login() {
     let handlesubmit = async (event)=>{
         event.preventDefault();
         try{
-            const response = await axios("http://localhost:8080/login",formData);
+            const response = await axios.post("http://localhost:8080/login",formData);
             localStorage.setItem("token",response.data.token);
             setFormData({
                 email: "",
