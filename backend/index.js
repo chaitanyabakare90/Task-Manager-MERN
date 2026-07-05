@@ -6,6 +6,7 @@ const cors = require("cors");
 const Tasks = require("./models/tasks.js")
 const User = require("./models/user.js");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -56,14 +57,25 @@ app.post("/login",async(req,res) =>{
             })
         }
         const isMatch = await bcrypt.compare(password,existingUser.password);
+
         if(isMatch === false){
             return res.status(400).json({
                 message : "Wrong Password"
             })
         } 
+        const jwttoken = jwt.sign(
+            {
+                id : existingUser._id
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn : "1h"
+            }
+        )
         res.status(200).json({
-            message : "User is Valid"
-        })
+            message: "Login Successful",
+            token: jwttoken
+        });
     }catch(err){
         res.status(500).json({
             message : err.message

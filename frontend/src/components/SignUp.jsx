@@ -2,6 +2,7 @@ import { useState } from "react"
 import "../style/Addtask.css"
 import axios from "axios"
 import { Link } from "react-router";
+import { useNavigate } from "react-router-dom"
 
 
 export default function SignUp() {
@@ -10,7 +11,7 @@ export default function SignUp() {
         email: "",
         password:""
     })
-
+    const navigate = useNavigate();
     let handleInputChange = (event) => {
         setFormData((currData) => {
             return { ...currData, [event.target.name]: event.target.value };
@@ -22,11 +23,13 @@ export default function SignUp() {
         try{
             const response = await axios.post("http://localhost:8080/signup",formData);
             console.log(response.data);
+
             setFormData({
                 name : "",
                 email : "",
                 password : "",
             })
+            navigate("/login")
         }catch(err){
             console.log(err.message)
         }

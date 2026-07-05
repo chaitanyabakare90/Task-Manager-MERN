@@ -2,13 +2,14 @@ import { useState } from "react"
 import "../style/Addtask.css"
 import axios from "axios"
 import { Link } from "react-router";
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
     let [formData, setFormData] = useState({
         email: "",
         password:""
     })
-
+    const navigate = useNavigate();
     let handleInputChange = (event) => {
         setFormData((currData) => {
             return { ...currData, [event.target.name]: event.target.value };
@@ -17,6 +18,17 @@ export default function Login() {
 
     let handlesubmit = async (event)=>{
         event.preventDefault();
+        try{
+            const response = await axios("http://localhost:8080/login",formData);
+            localStorage.setItem("token",response.data.token);
+            setFormData({
+                email: "",
+                password:""
+            })
+            navigate("/list");
+        }catch(err){
+            console.log(err.message);
+        }
     }
 
     return (
