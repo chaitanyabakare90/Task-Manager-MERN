@@ -1,0 +1,65 @@
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.welcome-container{
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.welcome-card{
+    background: white;
+    padding: 50px;
+    width: 500px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+}
+
+.welcome-card h1{
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.welcome-card p{
+    color: #666;
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 35px;
+}
+
+.welcome-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.welcome-btn{
+    text-decoration: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.signup-btn{
+    background: #4CAF50;
+}
+
+.signup-btn:hover{
+    background: #43a047;
+}
+
+.login-btn{
+    background: #2196F3;
+}
+
+.login-btn:hover{
+    background: #1976d2;
+}

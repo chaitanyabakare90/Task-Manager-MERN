@@ -6,6 +6,7 @@ import UpdateTask from "./components/UpdateTask"
 import SignUp from "./components/SignUp"
 import Login from "./components/Login"
 import ProtectedRoute from "./components/ProtectedRoute"
+import WelcomePage from "./components/WelcomePage"
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <>
       <NavBar></NavBar>
       <Routes>
+        <Route path="/" element={<WelcomePage></WelcomePage>}></Route>
         <Route path="/list"
           element={<ProtectedRoute>
             <List />
