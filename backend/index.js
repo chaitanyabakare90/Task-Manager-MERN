@@ -204,6 +204,8 @@ app.put("/tasks/:id", verifyToken ,async (req, res) => {
 
 
 
-app.listen(8080, () => {
-    console.log("app is listening");
-})
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log(`App is listening on port ${PORT}`);
+});
