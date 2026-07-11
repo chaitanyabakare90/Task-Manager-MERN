@@ -17,7 +17,7 @@ export default function UpdateTask() {
     useEffect(() => {
         async function fetchTask() {
             try {
-                const response = await axios.get(`http://localhost:8080/tasks/${id}`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
                     headers: {
                         authorization: `Bearer ${token}`
                     }
@@ -40,7 +40,7 @@ export default function UpdateTask() {
         event.preventDefault();
         setLoading(true);
         try {
-            const response = await axios.put(`http://localhost:8080/tasks/${id}`, formData);
+            const response = await axios.put(`${import.meta.env.VITE_API_URL}/tasks/${id}`, formData);
             console.log(response.data);
             setFormData({ title: "", description: "" })
             navigate("/list");

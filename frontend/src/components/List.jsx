@@ -13,7 +13,7 @@ export default function List() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:8080/tasks", {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/tasks`, {
                     headers: {
                         authorization: `Bearer ${token}`
                     }
@@ -28,7 +28,7 @@ export default function List() {
 
     let handleDeleteTask = async (id) => {
         try {
-            await axios.delete(`http://localhost:8080/delete/${id}`, {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/delete/${id}`, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -60,7 +60,7 @@ export default function List() {
     let deleteMultiple = async () => {
         if (selectedTask.length === 0) return;
         try {
-            await axios.delete("http://localhost:8080/delete/multiple", {
+            await axios.delete(`${import.meta.env.VITE_API_URL}/delete/multiple`, {
                 headers: {
                     authorization: `Bearer ${token}`
                 },

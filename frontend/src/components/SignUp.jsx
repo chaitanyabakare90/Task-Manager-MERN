@@ -24,7 +24,7 @@ export default function SignUp() {
         event.preventDefault();
         setError("");
         try {
-            const response = await axios.post("http://localhost:8080/signup", formData);
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/signup`, formData);
             console.log(response.data);
             setFormData({ name: "", email: "", password: "" })
             navigate("/login")
