@@ -1,65 +1,208 @@
-body{
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+/* ===================================================
+   WELCOME PAGE – Hero section with animations
+   =================================================== */
+.welcome-page {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
-.welcome-container{
-    height: 90vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg,#667eea,#764ba2);
+/* Decorative orbs */
+.welcome-page::before,
+.welcome-page::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
 }
 
-.welcome-card{
-    background: white;
-    padding: 50px;
-    width: 500px;
-    text-align: center;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.2);
+.welcome-page::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  top: -100px;
+  left: -200px;
+  animation: floatOrb1 8s ease-in-out infinite;
 }
 
-.welcome-card h1{
-    font-size: 42px;
-    margin-bottom: 20px;
-    color: #333;
+.welcome-page::after {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+  bottom: -100px;
+  right: -100px;
+  animation: floatOrb2 10s ease-in-out infinite;
 }
 
-.welcome-card p{
-    color: #666;
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 35px;
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
 }
 
-.welcome-buttons{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-20px, 20px) scale(1.05); }
 }
 
-.welcome-btn{
-    text-decoration: none;
-    padding: 12px 28px;
-    border-radius: 6px;
-    color: white;
-    font-weight: bold;
-    transition: .3s;
+.welcome-content {
+  text-align: center;
+  max-width: 700px;
+  animation: fadeInUp 0.8s ease both;
 }
 
-.signup-btn{
-    background: #4CAF50;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.signup-btn:hover{
-    background: #43a047;
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #a78bfa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  margin-bottom: 32px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s 0.1s ease both;
 }
 
-.login-btn{
-    background: #2196F3;
+.welcome-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #a78bfa;
+  border-radius: 50%;
+  animation: pulseDot 2s ease-in-out infinite;
 }
 
-.login-btn:hover{
-    background: #1976d2;
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+.welcome-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s 0.2s ease both;
+}
+
+.welcome-title .gradient-text {
+  background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: gradientShift 4s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+.welcome-subtitle {
+  font-size: 1.15rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 48px;
+  animation: fadeInUp 0.8s 0.3s ease both;
+}
+
+.welcome-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s 0.4s ease both;
+}
+
+.welcome-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+
+.welcome-btn-primary {
+  background: linear-gradient(135deg, #7c3aed, #3b82f6);
+  color: white;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4), 0 0 0 0 rgba(124, 58, 237, 0);
+}
+
+.welcome-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.5), 0 0 0 4px rgba(124, 58, 237, 0.15);
+}
+
+.welcome-btn-secondary {
+  color: #a78bfa;
+  border: 1.5px solid rgba(124, 58, 237, 0.3);
+  background: rgba(124, 58, 237, 0.08);
+}
+
+.welcome-btn-secondary:hover {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.5);
+  color: #c4b5fd;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.2);
+}
+
+/* Feature badges */
+.welcome-features {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 64px;
+  animation: fadeInUp 0.8s 0.5s ease both;
+}
+
+.feature-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.feature-pill:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+.feature-pill-icon {
+  font-size: 1rem;
 }
